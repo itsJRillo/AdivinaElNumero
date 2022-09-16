@@ -22,30 +22,26 @@ public class MainActivity extends AppCompatActivity {
 
         adivinar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(Integer.parseInt(number.getText().toString()) == rand){
-                    GoodToast();
+                if(Integer.parseInt(number.getText().toString()) > rand){
+                    CharSequence text = "Es más pequeño";
+                    Toast(text);
+                } else if(Integer.parseInt(number.getText().toString()) < rand){
+                    CharSequence text = "Es más grande";
+                    Toast(text);
                 } else {
-                    BadToast();
+                    CharSequence text = "¡¡Congratulations!!";
+                    Toast(text);
                 }
             }
         });
     }
 
-    public void BadToast(){
+    public void Toast(CharSequence text){
         Context context = getApplicationContext();
-        CharSequence text = "¡¡ Wrong number !!";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    public void GoodToast(){
-        Context context = getApplicationContext();
-        CharSequence text = "¡¡ Congratulations !!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
 }
