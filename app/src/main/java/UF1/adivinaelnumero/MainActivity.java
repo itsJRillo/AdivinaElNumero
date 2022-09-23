@@ -32,15 +32,23 @@ public class MainActivity extends AppCompatActivity {
                 registros.append("\nIntentos restantes: " + String.valueOf(5 - intentos[0]) + "\n");
                 intentos[0] += 1;
                 if(Integer.parseInt(number.getText().toString()) < rand){
+                    CharSequence text = "Es más grande";
+                    Toast(text);
                     registros.append("Es más grande\n");
                 } else if (Integer.parseInt(number.getText().toString()) > rand){
+                    CharSequence text = "Es más pequeño";
+                    Toast(text);
                     registros.append("Es más pequeño\n");
                 } else {
-                    registros.append("\nCongratulations\nNúmero a adivinar: " + rand);
+                    CharSequence text = "¡¡ Congratulations !!";
+                    Toast(text);
+                    registros.append("\n¡¡ Congratulations !!\nNúmero a adivinar: " + rand);
                     adivinar.setEnabled(false);
                 }
 
                 if (intentos[0] == 5){
+                    CharSequence text = "No has tenido suerte";
+                    Toast(text);
                     registros.append("\nAww, no has tenido suerte\nEl número que buscas es: " + rand);
                     adivinar.setEnabled(false);
                 }
