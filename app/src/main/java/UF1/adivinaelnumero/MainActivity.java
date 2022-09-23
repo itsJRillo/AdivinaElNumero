@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         int rand = (int) Math.floor(Math.random() * 100);
         final int[] intentos = {0};
         final TextView registros = findViewById(R.id.mensaje);
+        registros.setMovementMethod(new ScrollingMovementMethod());
+
         final EditText number = findViewById(R.id.intento);
         final Button adivinar = findViewById(R.id.adivinar);
 
@@ -37,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
                     adivinar.setEnabled(false);
                 }
 
-                if (intentos[0] == 5){adivinar.setEnabled(false);}
+                if (intentos[0] == 5){
+                    registros.append("\nAww, no has tenido suerte\nEl número que buscas es: " + rand);
+                    adivinar.setEnabled(false);
+                }
 
             }
         });

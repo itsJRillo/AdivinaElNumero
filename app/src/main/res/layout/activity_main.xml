@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="52dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/app_name"
@@ -30,11 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginEnd="157dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="440dp"
         android:text="@string/adivinar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.583"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -51,6 +50,7 @@
 
     <TextView
         android:id="@+id/mensaje"
+        android:scrollbars="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
