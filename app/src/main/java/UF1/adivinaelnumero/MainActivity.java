@@ -2,7 +2,9 @@ package UF1.adivinaelnumero;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -12,16 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    int intentos = 0;
+    int rand = (int) Math.floor(Math.random() * 100);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int rand = (int) Math.floor(Math.random() * 100);
-        final int[] intentos = {0};
         final TextView registros = findViewById(R.id.mensaje);
         registros.setMovementMethod(new ScrollingMovementMethod());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         final EditText number = findViewById(R.id.intento);
         final Button adivinar = findViewById(R.id.adivinar);
@@ -29,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         adivinar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                registros.append("\nIntentos restantes: " + String.valueOf(5 - intentos[0]) + "\n");
-                intentos[0] += 1;
+                intentos += 1;
+                registros.append("\nIntentos restantes: " + intentos + "\n");
+
                 if(Integer.parseInt(number.getText().toString()) < rand){
                     CharSequence text = "Es más grande";
                     Toast(text);
@@ -39,25 +44,44 @@ public class MainActivity extends AppCompatActivity {
                     CharSequence text = "Es más pequeño";
                     Toast(text);
                     registros.append("Es más pequeño\n");
-                } else {
-                    CharSequence text = "¡¡ Congratulations !!";
-                    Toast(text);
-                    registros.append("\n¡¡ Congratulations !!\nNúmero a adivinar: " + rand);
-                    adivinar.setEnabled(false);
+                } else if(Integer.parseInt(number.getText().toString()) == rand){
+
+                    builder.setMessage("¡¡¡ Congratulations !!!");
+                    builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            CharSequence text = "¡¡ Congratulations !!";
+                            Toast(text);
+                            intentos = 0;
+                            registros.setText("Aquí aparecerán los resultados\n");
+                            number.setText("");
+                        }
+                    });
+
+                    AlertDialog win = builder.create();
+                    win.setTitle("YOU WIN");
+                    win.show();
                 }
 
-                if (intentos[0] == 5){
-                    CharSequence text = "No has tenido suerte";
-                    Toast(text);
-                    registros.append("\nAww, no has tenido suerte\nEl número que buscas es: " + rand);
-                    adivinar.setEnabled(false);
-                }
+                if (intentos == 5){
+                    builder.setMessage("¡¡¡ How unlucky, you didn't win !!!");
+                    builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            CharSequence text = "No has tenido suerte";
+                            Toast(text);
+                            intentos = 0;
+                            registros.setText("Aquí aparecerán los resultados\n");
+                            number.setText("");
+                        }
+                    });
 
+                    AlertDialog lose = builder.create();
+                    lose.setTitle("YOU LOSE");
+                    lose.show();
+                }
             }
         });
-
-        registros.setText("");
     }
+
 
     public void Toast(CharSequence text){
         Context context = getApplicationContext();
