@@ -33,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
         adivinar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                if (String.valueOf(number).isEmpty()) {
+                    builder.setMessage("¡ You can't leave blanks !");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {}
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.setTitle("Warning");
+                    alert.show();
+                }
+
                 intentos += 1;
                 registros.append("\nIntentos restantes: " + intentos + "\n");
 
