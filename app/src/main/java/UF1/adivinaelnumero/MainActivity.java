@@ -1,10 +1,13 @@
 package UF1.adivinaelnumero;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText number = findViewById(R.id.intento);
         final Button adivinar = findViewById(R.id.adivinar);
+        final Button winners =  findViewById(R.id.winners);
 
 
         adivinar.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     win.show();
                 }
 
-                if (intentos == 5){
+                if (intentos == 15){
                     builder.setMessage("¡¡¡ How unlucky, you didn't win !!!");
                     builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -92,8 +96,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        winners.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage(view);
+            }
+        });
     }
 
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, WinnersActivity.class);
+        startActivity(intent);
+    }
 
     public void Toast(CharSequence text){
         Context context = getApplicationContext();
