@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -17,14 +18,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
     int intentos = 0;
     int totalIntentos = 0;
     int rand = (int) Math.floor(Math.random() * 100);
+
+    static ArrayList<String> nombreJugador = new ArrayList<>();
+    static ArrayList<Integer> intentosJugador = new ArrayList<>();
+
     private String m_text = "";
-    String jugador = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 intentos += 1;
-                registros.append("\nIntentos restantes: " + intentos + "\n");
+                registros.append(rand + "\nIntentos restantes: " + intentos + "\n");
 
                 if(Integer.parseInt(number.getText().toString()) < rand){
                     CharSequence text = "Es más grande";
@@ -79,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             m_text = input.getText().toString();
-                            jugador = m_text;
+                            nombreJugador.add(m_text);
+                            intentosJugador.add(totalIntentos);
+                            Toast("¡¡ Nombre añadido !!");
                         }
                     });
                     record.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -136,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, WinnersActivity.class);
-        intent.putExtra("nombre_player",jugador);
-        intent.putExtra("intentos_player",totalIntentos);
+        intent.putExtra("nombre_jugador",nombreJugador);
+        intent.putExtra("intentos_jugador",intentosJugador);
         startActivity(intent);
     }
 
